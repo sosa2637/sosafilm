@@ -1,62 +1,71 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { Routes, Route } from "react-router-dom";
+
 import HomePage from "./pages/HomePage";
-import MoviePage from "./pages/MoviePage";
-import CategoryPage from "./pages/CategoryPage";
-import ActorPage from "./pages/ActorPage";
-import SearchPage from "./pages/SearchPage";
+import FilmsPage from "./pages/FilmsPage";
+import FilmDetailPage from "./pages/FilmDetailPage";
+
+import SeriesPage from "./pages/SeriesPage";
+import SerieDetailPage from "./pages/SerieDetailPage";
+import SaisonsPage from "./pages/SaisonsPage";
+
+import ActorsPage from "./pages/ActorsPage";
+import ActorDetailPage from "./pages/ActorDetailPage";
+
+import ActualitesPage from "./pages/ActualitesPage";
 import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import LoginPage from "./pages/LoginPage";
+import SearchPage from "./pages/SearchPage";
+
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand as={Link} to="/">React Films 2025</Navbar.Brand>
-          <Navbar.Toggle aria-controls="main-navbar" />
-          <Navbar.Collapse id="main-navbar">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">Accueil</Nav.Link>
+    <div className="page-bg">
+      <Header />
 
-              {/* --- FILMS --- */}
-              <NavDropdown title="Films" id="nav-films">
-                <NavDropdown.Item as={Link} to="/film/1">Film #1</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/film/2">Film #2</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/film/3">Film #3</NavDropdown.Item>
-              </NavDropdown>
+      <Routes>
 
-              {/* --- CATEGORIES --- */}
-              <NavDropdown title="Catégories" id="nav-categories">
-                <NavDropdown.Item as={Link} to="/categorie/28">Action</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/categorie/35">Comédie</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/categorie/12">Aventure</NavDropdown.Item>
-              </NavDropdown>
+        {/* HOME */}
+        <Route path="/" element={<HomePage />} />
 
-              {/* --- ACTEURS --- */}
-              <NavDropdown title="Acteurs" id="nav-acteurs">
-                <NavDropdown.Item as={Link} to="/acteur/1">Acteur #1</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/acteur/2">Acteur #2</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/acteur/3">Acteur #3</NavDropdown.Item>
-              </NavDropdown>
+        {/* FILMS */}
+        <Route path="/films" element={<FilmsPage />} />
+        <Route path="/film/:id" element={<FilmDetailPage />} />
 
-              <Nav.Link as={Link} to="/search">Recherche</Nav.Link>
-              <Nav.Link as={Link} to="/a-propos">À propos</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        {/* SERIES */}
+        <Route path="/series" element={<SeriesPage />} />
+        <Route path="/series/:id" element={<SeriesPage />} />
+        <Route path="/series/genre/:id" element={<SeriesPage />} />
 
-      <main className="container py-3">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/film/:id" element={<MoviePage />} />
-          <Route path="/categorie/:idCat" element={<CategoryPage />} />
-          <Route path="/acteur/:id" element={<ActorPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/a-propos" element={<AboutPage />} />
-          <Route path="*" element={<h1>404 — Page introuvable</h1>} />
-        </Routes>
-      </main>
-    </BrowserRouter>
+        {/* DETAILS SERIES */}
+        <Route path="/serie/:id" element={<SerieDetailPage />} />
+        <Route path="/serie/:id/saisons" element={<SaisonsPage />} />
+
+        {/* ACTEURS */}
+        <Route path="/actors" element={<ActorsPage />} />
+        <Route path="/actor/:id" element={<ActorDetailPage />} />
+
+        {/* ACTUALITÉS */}
+        <Route path="/actualites" element={<ActualitesPage />} />
+
+        {/* FIXED PAGES */}
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+
+        {/* LOGIN */}
+        <Route path="/login" element={<LoginPage />} />
+
+        {/* SEARCH */}
+        <Route path="/search" element={<SearchPage />} />
+
+        {/* 404 → HOME */}
+        <Route path="*" element={<HomePage />} />
+
+      </Routes>
+
+      <Footer />
+    </div>
   );
 }
