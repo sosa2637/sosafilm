@@ -1,60 +1,134 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+// src/pages/ActualitesPage.tsx
+import React, { useEffect, useState } from "react";
 
-export default function ActorsPage() {
-  const { id } = useParams(); // Récupère l’ID depuis l’URL
-  const [actor, setActor] = useState(null);
+type Article = {
+  title: string;
+  description: string;
+  url: string;
+  urlToImage?: string;
+  publishedAt?: string;
+  source?: { name: string };
+};
+
+const CATEGORIES = [
+  { key: "cinema", label: "Toutes" },
+  { key: "actors", label: "Acteurs" },
+  { key: "oscars", label: "Oscars" },
+  { key: "box office", label: "Box-Office" },
+  { key: "marvel", label: "Marvel" },
+  { key: "disney", label: "Disney" },
+  { key: "horror movies", label: "Horreur" },
+  { key: "animation", label: "Animation" },
+  { key: "netflix", label: "Netflix" },
+  { key: "africa", label: "afrique" },
+  
+];
+
+export default function ActualitesPage() {
+  const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [category, setCategory] = useState("cinema");
+  const [page, setPage] = useState(1);
+
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+  const [error, setError] = useState<string | null>(null);
+
+  // 🔥 Fonction pour charger les news
+  const fetchNews = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(
+        `https://newsapi.org/v2/everything?q=${encodeURIComponent(
+          category
+        )}&language=fr&pageSize=9&page=${page}&apiKey=${NEWS_API_KEY}`
+      );
+
+      if (!res.ok) throw new Error("Erreur API NewsAPI");
+
+      const data = await res.json();
+      setArticles(data.articles);
+    } catch (e) {
+      setError("Impossible de charger les actualités.");
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    if (!id) {
-      setError("ID de l’acteur manquant");
-      setLoading(false);
-      return;
-    }
-
-    const fetchActor = async () => {
-      try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=fr`
-        );
-        if (!res.ok) throw new Error("Erreur API");
-        const data = await res.json();
-        setActor(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchActor();
-  }, [id, apiKey]);
-
-  if (loading) return <p>Chargement...</p>;
-  if (error) return <p>Erreur : {error}</p>;
-  if (!actor) return <p>Aucun acteur trouvé.</p>;
+    fetchNews();
+  }, [category, page]);
 
   return (
-    <div className="page-bg" style={{ maxWidth: 1100, margin: "0 auto", padding: "2em 1em" }}>
-      <h2 style={{ color: "#ffd600", textAlign: "center" }}>{actor.name}</h2>
-      <div style={{ display: "flex", gap: "2em", alignItems: "flex-start" }}>
-        <img
-          src={
-            actor.profile_path
-              ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-              : "https://via.placeholder.com/170x270?text=NO+IMAGE"
-          }
-          alt={actor.name}
-          style={{ borderRadius: "1em", width: "170px" }}
-        />
-        <div>
-          <p><strong>Date de naissance :</strong> {actor.birthday}</p>
-          <p><strong>Lieu de naissance :</strong> {actor.place_of_birth}</p>
-          <p><strong>Biographie :</strong> {actor.biography}</p>
-        </div>
+    <div className="news-page">
+
+      <h1 className="news-title">📰 Actualités Cinéma</h1>
+
+      {/* ------- CATEGORIES ------- */}
+      <div className="news-categories">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat.key}
+            className={`news-category-btn ${
+              category === cat.key ? "active" : ""
+            }`}
+            onClick={() => {
+              setCategory(cat.key);
+              setPage(1); // reset pagination
+            }}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* ------- CONTENU ------- */}
+      {loading && <p>Chargement...</p>}
+      {error && <p>{error}</p>}
+
+      <div className="news-grid">
+        {articles.map((a, idx) => (
+          <div key={idx} className="news-card">
+            <img
+              src={
+                a.urlToImage ||
+                "https://via.placeholder.com/400x250?text=Pas+d'image"
+              }
+              alt={a.title}
+              className="news-img"
+            />
+            <div className="news-content">
+              <h2>{a.title}</h2>
+              <p>{a.description}</p>
+              <small>{a.source?.name}</small> <br />
+              <small>{new Date(a.publishedAt ?? "").toLocaleDateString()}</small>
+
+              <a
+                href={a.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-link"
+              >
+                Lire la suite →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* ------- PAGINATION ------- */}
+      <div className="news-pagination">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((p) => p - 1)}
+        >
+          ← Précédent
+        </button>
+
+        <span>Page {page}</span>
+
+        <button onClick={() => setPage((p) => p + 1)}>Suivant →</button>
       </div>
     </div>
   );

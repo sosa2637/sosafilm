@@ -7,6 +7,8 @@ import FilmDetailPage from "./pages/FilmDetailPage";
 import SeriesPage from "./pages/SeriesPage";
 import SerieDetailPage from "./pages/SerieDetailPage";
 import SaisonsPage from "./pages/SaisonsPage";
+import EpisodesPage from "./pages/EpisodesPage";
+import EpisodeDetailPage from "./pages/EpisodeDetailPage";
 
 import ActorsPage from "./pages/ActorsPage";
 import ActorDetailPage from "./pages/ActorDetailPage";
@@ -42,6 +44,8 @@ export default function App() {
         {/* DETAILS SERIES */}
         <Route path="/serie/:id" element={<SerieDetailPage />} />
         <Route path="/serie/:id/saisons" element={<SaisonsPage />} />
+        <Route path="/serie/:id/saison/:saison" element={<EpisodesPage />} />
+        <Route path="/serie/:id/saison/:saison/episode/:episode" element={<EpisodeDetailPage />} />
 
         {/* ACTEURS */}
         <Route path="/actors" element={<ActorsPage />} />

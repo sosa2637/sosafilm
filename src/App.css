@@ -492,3 +492,893 @@ body {
   .detail-poster { width: 160px; }
   .media-swiper .movie-img { width: 120px; height: 170px; }
 }
+.news-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.news-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.news-categories {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.news-category-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  background: #222;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.news-category-btn.active {
+  background: #e50914;
+}
+
+.news-category-btn:hover {
+  background: #444;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+
+.news-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--panel);
+  backdrop-filter: blur(8px);
+  transition: 0.3s ease;
+}
+
+.news-card:hover {
+  transform: scale(1.02);
+}
+
+.news-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.news-content {
+  padding: 1rem;
+}
+
+.news-link {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: #e50914;
+}
+
+.news-pagination {
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  
+  button {
+    padding: 0.6rem 1rem;
+    border: none;
+    background: #222;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: #e50914;
+    }
+  }
+}
+.contact h1 {
+  text-align: center;
+  margin-bottom: 65px;
+  margin-top: 50px;
+}
+ 
+.contact .form-div {
+    margin-left: 30%;
+}
+ 
+.contact input {
+  padding: 7px 35px 7px 5px;
+  margin-right: 14px;
+  margin-bottom: -8px;
+  border: 2px solid #FFDE59;
+}
+ 
+.contact textarea {
+  padding-left: 5px;
+  border: 2px solid #FFDE59;
+  margin-bottom: -8px;
+}
+ 
+#submit {
+  background-color: #FFDE59;
+  border-radius: 5px;
+  padding: 4px 40px;
+  font-weight: bold;
+  font-family: 'Roboto';
+}
+ 
+.contact #email {
+  margin-bottom: 5px;
+}
+.contact #phone {
+  margin-bottom: 40px;
+}
+/* ================================
+   LOGIN PAGE - Glassmorphism Style
+================================ */
+
+.login-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 40px 35px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.6s ease;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: var(--accent);
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(255, 214, 0, 0.2);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 
+    0 0 0 3px rgba(255, 214, 0, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.login-btn {
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #232323;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 77, 77, 0.2);
+}
+
+.login-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 10px 25px rgba(255, 77, 77, 0.3),
+    0 0 15px rgba(255, 214, 0, 0.2);
+}
+
+.login-btn:active {
+  transform: translateY(-1px);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 25px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.login-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.login-footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Mode light */
+[data-theme="light"] .login-container {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] .form-group input {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+[data-theme="light"] .form-group input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 0 0 3px rgba(193, 139, 0, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .form-group input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .login-footer {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 30px 25px;
+    margin: 0 15px;
+  }
+  
+  .login-title {
+    font-size: 1.9rem;
+  }
+  
+  .form-group input {
+    padding: 12px 16px;
+  }
+  
+  .login-btn {
+    padding: 14px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ================================
+   ABOUT PAGE - Glassmorphism Style
+================================ */
+
+.about-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  animation: fadeIn 0.6s ease;
+}
+
+.about-page h1 {
+  font-size: 2.8rem;
+  margin-bottom: 30px;
+  color: var(--accent);
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(255, 214, 0, 0.2);
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.about-page h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  border-radius: 2px;
+}
+
+.about-page h2 {
+  font-size: 1.8rem;
+  margin: 40px 0 20px;
+  color: #fff;
+  padding-left: 15px;
+  border-left: 4px solid var(--accent);
+}
+
+.about-page p {
+  line-height: 1.7;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.about-page ul {
+  list-style: none;
+  padding: 0;
+  margin: 25px 0;
+  display: grid;
+  gap: 15px;
+}
+
+.about-page li {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 18px 22px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-page li::before {
+  content: '🎬';
+  margin-right: 12px;
+  font-size: 1.1em;
+}
+
+.about-page li:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 214, 0, 0.2);
+  transform: translateX(5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.about-page a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: all 0.2s;
+  padding: 0 2px;
+}
+
+.about-page a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+  border-radius: 1px;
+}
+
+.about-page a:hover {
+  color: #fff;
+}
+
+.about-page a:hover::after {
+  width: 100%;
+}
+
+/* Section spéciale pour les crédits API */
+.about-page h2:last-of-type {
+  margin-top: 50px;
+}
+
+.about-page p:has(a[href*="themoviedb"]),
+.about-page p:has(a[href*="apinews"]) {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 15px 0;
+}
+
+/* Badge API */
+.api-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.api-badge::before {
+  content: '⚡';
+  font-size: 1.1em;
+}
+
+/* Mode light */
+[data-theme="light"] .about-page h1 {
+  color: var(--accent);
+  text-shadow: 0 2px 10px rgba(193, 139, 0, 0.2);
+}
+
+[data-theme="light"] .about-page h2 {
+  color: #333;
+}
+
+[data-theme="light"] .about-page p {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="light"] .about-page li {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="light"] .about-page li:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(193, 139, 0, 0.3);
+}
+
+[data-theme="light"] .about-page a {
+  color: var(--accent);
+}
+
+[data-theme="light"] .about-page a:hover {
+  color: #000;
+}
+
+[data-theme="light"] .about-page p:has(a[href*="themoviedb"]),
+[data-theme="light"] .about-page p:has(a[href*="apinews"]) {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-page {
+    padding: 30px 15px;
+  }
+  
+  .about-page h1 {
+    font-size: 2.2rem;
+  }
+  
+  .about-page h2 {
+    font-size: 1.5rem;
+  }
+  
+  .about-page p {
+    font-size: 1rem;
+  }
+  
+  .about-page li {
+    padding: 15px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page h1 {
+    font-size: 1.9rem;
+  }
+  
+  .about-page h2 {
+    font-size: 1.3rem;
+    padding-left: 12px;
+    border-left-width: 3px;
+  }
+  
+  .about-page ul {
+    gap: 12px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.episode-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.episode-card-link:hover {
+  transform: translateY(-5px);
+}
+
+.view-details-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #232323;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.view-details-btn:hover {
+  background: #ffeb3b;
+}
+/* ================================
+   FIX EPISODE DETAIL CENTERING
+================================ */
+/* ================================
+   EPISODE DETAIL PAGE - Centered
+================================ */
+
+.episode-detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Bouton retour */
+.back-button {
+  align-self: flex-start;
+  margin-bottom: 30px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+/* Conteneur principal */
+.episode-detail {
+  width: 100%;
+  max-width: 800px;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 40px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+/* Image */
+.episode-detail-image {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.episode-detail-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 15px;
+}
+
+/* Titre */
+.episode-detail-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Métadonnées */
+.episode-detail-meta {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.season-episode,
+.air-date,
+.rating {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  font-size: 0.95rem;
+  color: var(--accent);
+  border: 1px solid rgba(255, 214, 0, 0.2);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating small {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Synopsis */
+.episode-detail-overview {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 25px;
+  border-radius: 15px;
+  margin: 30px 0;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.episode-detail-overview h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #fff;
+  text-align: center;
+}
+
+.episode-detail-overview p {
+  line-height: 1.7;
+  color: var(--muted);
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+/* Acteurs invités */
+.guest-stars {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.guest-stars h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.guest-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.guest-name {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 15px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s;
+}
+
+.guest-name:hover {
+  background: rgba(255, 214, 0, 0.1);
+  color: var(--accent);
+  border-color: rgba(255, 214, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Mode light */
+[data-theme="light"] .episode-detail {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .back-button {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+[data-theme="light"] .back-button:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+[data-theme="light"] .episode-detail-title {
+  color: #333;
+}
+
+[data-theme="light"] .season-episode,
+[data-theme="light"] .air-date,
+[data-theme="light"] .rating {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--accent);
+  border-color: rgba(193, 139, 0, 0.3);
+}
+
+[data-theme="light"] .episode-detail-overview {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .episode-detail-overview h3 {
+  color: #333;
+}
+
+[data-theme="light"] .episode-detail-overview p {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="light"] .guest-stars h3 {
+  color: #333;
+}
+
+[data-theme="light"] .guest-name {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.7);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .guest-name:hover {
+  background: rgba(193, 139, 0, 0.1);
+  color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .episode-detail-container {
+    padding: 30px 15px;
+  }
+  
+  .episode-detail {
+    padding: 30px 20px;
+  }
+  
+  .episode-detail-title {
+    font-size: 2rem;
+  }
+  
+  .episode-detail-meta {
+    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .season-episode,
+  .air-date,
+  .rating {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 480px) {
+  .episode-detail-title {
+    font-size: 1.7rem;
+  }
+  
+  .episode-detail-overview {
+    padding: 20px 15px;
+  }
+  
+  .guest-list {
+    justify-content: center;
+  }
+}
+/* Force le centrage */
+.episode-detail-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.episode-detail {
+  text-align: center !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.episode-detail-content {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+.episode-detail-title,
+.episode-detail-meta,
+.episode-detail-overview,
+.guest-stars {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Centre tous les éléments enfants */
+.episode-detail > * {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Centre spécifiquement les métadonnées */
+.episode-detail-meta {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 20px !important;
+}
+
+/* Force l'image à être centrée */
+.episode-detail-image {
+  display: flex !important;
+  justify-content: center !important;
+  margin: 0 auto 30px !important;
+}
+
+.episode-detail-image img {
+  margin: 0 auto !important;
+  display: block !important;
+}
