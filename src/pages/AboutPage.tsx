@@ -5,8 +5,8 @@ export default function AboutPage() {
       <p>Bienvenue sur React Films 2025. Ce projet a été imaginé pour proposer une base de films interactive permettant d'explorer les films et les acteurs référencés sur TMDb.</p>
       <h2>L'équipe</h2>
       <ul>
-        <li>Cedric — Rôle (exemple : Développeur Front-End)</li>
-        <li>Leslie — Rôle (exemple : Designer UI)</li>
+        <li>Cedric — Rôle (Développeur Front-End)</li>
+        <li>Leslie — Rôle (Designer UI)</li>
       </ul>
       <h2>Pourquoi ce projet&nbsp;?</h2>
       <p>Découvrir les potentialités de React et vite, manipuler une vraie API Public, et s'améliorer en conception de sites responsives et dynamiques.</p>

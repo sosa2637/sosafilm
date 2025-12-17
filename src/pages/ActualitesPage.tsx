@@ -17,11 +17,8 @@ const CATEGORIES = [
   { key: "box office", label: "Box-Office" },
   { key: "marvel", label: "Marvel" },
   { key: "disney", label: "Disney" },
-  { key: "horror movies", label: "Horreur" },
   { key: "animation", label: "Animation" },
   { key: "netflix", label: "Netflix" },
-  { key: "africa", label: "afrique" },
-  
 ];
 
 export default function ActualitesPage() {
