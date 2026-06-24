@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 
-export default function LoginPage() {
+export default function RegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -16,23 +17,23 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       const data = await res.json().catch(() => null);
 
       if (!res.ok) {
-        throw new Error(data?.error || "Email ou mot de passe incorrect.");
+        throw new Error(data?.error || "Erreur lors de l'inscription.");
       }
 
       // Stocker les infos
       localStorage.setItem("sosa_token", data.token);
       localStorage.setItem("sosa_user", JSON.stringify(data.user));
       
-      // Rediriger et rafraichir
+      // Rediriger et rafraichir (ou forcer le Header à lire le localstorage)
       window.location.href = "/";
     } catch (err: any) {
       if (err.message === "Failed to fetch") {
@@ -68,8 +69,13 @@ export default function LoginPage() {
           <Logo />
         </div>
         
-        <h1 style={{ textAlign: 'center', fontSize: '1.8rem', marginBottom: '8px' }}>Bon retour !</h1>
-        <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '32px' }}>Connectez-vous à votre compte SOSA Ciné</p>
+        <h1 style={{ textAlign: 'center', fontSize: '1.8rem', marginBottom: '8px' }}>Créer un compte</h1>
+        <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '16px' }}>Rejoignez SOSA Ciné dès aujourd'hui</p>
+
+        <div style={{ background: 'rgba(255, 152, 0, 0.1)', border: '1px solid #ff9800', color: '#ff9800', padding: '12px', borderRadius: '8px', marginBottom: '24px', fontSize: '13px', textAlign: 'center', lineHeight: 1.4 }}>
+          <strong>⚠️ Version Démo (Hébergement Gratuit)</strong><br />
+          Les comptes créés sont temporaires et seront effacés automatiquement lors de la mise en veille du serveur.
+        </div>
 
         {error && (
           <div style={{ 
@@ -91,6 +97,18 @@ export default function LoginPage() {
         )}
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div>
+            <label htmlFor="name" style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text-muted)' }}>Nom complet</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ex: Jean Dupont"
+              required
+              style={{ width: '100%', padding: '14px 16px', background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', borderRadius: '12px', color: '#fff', fontSize: '16px', boxSizing: 'border-box' }}
+            />
+          </div>
           <div>
             <label htmlFor="email" style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text-muted)' }}>Email</label>
             <input
@@ -133,12 +151,12 @@ export default function LoginPage() {
             gap: '8px'
           }}>
             {loading && <div className="loading-spinner" style={{ width: '16px', height: '16px', borderWidth: '2px', borderTopColor: '#000' }}></div>}
-            {loading ? "Connexion..." : "Se connecter"}
+            {loading ? "Création..." : "S'inscrire"}
           </button>
         </form>
         
         <p style={{ textAlign: 'center', marginTop: '32px', color: 'var(--text-muted)', fontSize: '14px' }}>
-          Pas encore de compte ? <Link to="/register" style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}>S'inscrire</Link>
+          Vous avez déjà un compte ? <Link to="/login" style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}>Se connecter</Link>
         </p>
       </div>
     </div>

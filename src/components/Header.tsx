@@ -1,12 +1,28 @@
 // src/components/Header.tsx
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../image/logo.png";
+import Logo from "./Logo";
 
 export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState<{name: string} | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const storedUser = localStorage.getItem("sosa_user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("sosa_token");
+    localStorage.removeItem("sosa_user");
+    setUser(null);
+    navigate("/");
+  };
 
   // Theme management
   const [theme, setTheme] = useState<string>(
@@ -31,8 +47,8 @@ export default function Header() {
   return (
     <header className="header-bar" role="banner">
       <div className="header-bar-left">
-        <Link to="/" aria-label="Accueil">
-          <img src={logo} alt="La Bobine" className="header-logo" />
+        <Link to="/" aria-label="Accueil" style={{ display: 'block', textDecoration: 'none' }}>
+          <Logo />
         </Link>
       </div>
 
@@ -49,7 +65,7 @@ export default function Header() {
         <Link to="/series" className="menu-btn">SÉRIES</Link>
         <Link to="/actors" className="menu-btn">ACTEURS</Link>
         <Link to="/actualites" className="menu-btn">ACTUALITÉS</Link>
-        <Link to="/about" className="menu-btn">A PROPOS</Link>
+        <Link to="/about" className="menu-btn">À PROPOS</Link>
         <Link to="/contact" className="menu-btn">CONTACT</Link>
 
         <button
@@ -73,13 +89,29 @@ export default function Header() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button className="search-submit" type="submit" aria-label="Lancer la recherche">
-            🔎
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
           </button>
         </form>
 
-        <Link to="/login" className="header-login">
-          <span role="img" aria-label="Utilisateur">👤</span> S'IDENTIFIER
-        </Link>
+        {user ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>{user.name}</span>
+            <button onClick={handleLogout} className="menu-btn" style={{ padding: '6px 12px', border: '1px solid var(--border-glass)' }}>
+              Déconnexion
+            </button>
+          </div>
+        ) : (
+          <Link to="/login" className="header-login">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            S'IDENTIFIER
+          </Link>
+        )}
       </div>
 
       {menuOpen && (
@@ -88,8 +120,14 @@ export default function Header() {
           <Link to="/series" onClick={() => setMenuOpen(false)}>SÉRIES</Link>
           <Link to="/actors" onClick={() => setMenuOpen(false)}>ACTEURS</Link>
           <Link to="/actualites" onClick={() => setMenuOpen(false)}>ACTUALITÉS</Link>
-          <Link to="/about" onClick={() => setMenuOpen(false)}>A PROPOS</Link>
+          <Link to="/about" onClick={() => setMenuOpen(false)}>À PROPOS</Link>
           <Link to="/contact" onClick={() => setMenuOpen(false)}>CONTACT</Link>
+
+          {user ? (
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="menu-btn">Déconnexion</button>
+          ) : (
+            <Link to="/login" onClick={() => setMenuOpen(false)} className="menu-btn">S'identifier</Link>
+          )}
 
           <button className="theme-toggle mobile" onClick={() => { toggleTheme(); setMenuOpen(false); }}>
             {theme === "dark" ? "🌙" : "☀️"}

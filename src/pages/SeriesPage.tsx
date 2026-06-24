@@ -1,13 +1,13 @@
 // src/pages/SeriesPage.tsx
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import GenreFilter from "../components/GenreFilter";
+import MediaCard from "../components/MediaCard";
 
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 
 export default function SeriesPage() {
   const { id } = useParams(); // genre slug optionel
-  const navigate = useNavigate();
   const [series, setSeries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState<number | null>(
@@ -46,38 +46,34 @@ export default function SeriesPage() {
 
   const handleGenreSelect = (genreId: number | null) => {
     setSelectedGenre(genreId);
-    // Si un genre est sélectionné, on désactive les filtres principaux
-    if (genreId) {
-      setCurrentFilter("");
-    }
+    if (genreId) setCurrentFilter("");
   };
 
   const handleFilterChange = (filter: string) => {
     setCurrentFilter(filter);
-    setSelectedGenre(null); // Réinitialiser le filtre genre quand on change de catégorie
+    setSelectedGenre(null); // Overrides genre selection immediately
   };
 
   // Filtres principaux pour séries
   const filters = [
     { id: "popular", label: "Populaires" },
     { id: "top_rated", label: "Mieux notées" },
-    { id: "on_the_air", label: "En cours" },
-    { id: "airing_today", label: "Aujourd'hui" }
+    { id: "on_the_air", label: "En cours de diffusion" },
+    { id: "airing_today", label: "Diffusées aujourd'hui" }
   ];
 
   return (
-    <div className="series-page">
+    <div className="series-page content-wrapper" style={{ paddingTop: '40px' }}>
       {/* Barre de filtres principaux */}
-      <div className="main-filters">
-        <h1 className="page-title">Séries TV</h1>
-        <div className="filter-buttons">
+      <div className="main-filters" style={{ marginBottom: '32px' }}>
+        <h1 className="section-title" style={{ marginTop: 0 }}>Séries TV</h1>
+        <div className="filter-buttons" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           {filters.map((filter) => (
             <button
               key={filter.id}
-              className={`filter-btn ${currentFilter === filter.id ? "active" : ""} ${selectedGenre ? "disabled" : ""}`}
+              className={`menu-btn ${currentFilter === filter.id && !selectedGenre ? "active" : ""}`}
+              style={(currentFilter === filter.id && !selectedGenre) ? { background: 'var(--accent)', color: '#000', fontWeight: 'bold', border: '1px solid var(--accent)' } : { border: '1px solid var(--border-glass)' }}
               onClick={() => handleFilterChange(filter.id)}
-              disabled={selectedGenre !== null}
-              title={selectedGenre ? "Désactivez le filtre par genre pour utiliser cette catégorie" : ""}
             >
               {filter.label}
             </button>
@@ -86,106 +82,56 @@ export default function SeriesPage() {
       </div>
 
       {/* Filtre par genre */}
-      <GenreFilter 
-        type="tv"
-        onSelectGenre={handleGenreSelect}
-        selectedGenreId={selectedGenre}
-      />
+      <div style={{ marginBottom: '32px' }}>
+        <GenreFilter 
+          type="tv"
+          onSelectGenre={handleGenreSelect}
+          selectedGenreId={selectedGenre}
+        />
+      </div>
 
-      {/* Affichage des informations de filtrage */}
+      {/* Affichage des résultats */}
       {selectedGenre && (
-        <div className="filter-info">
-          <div className="filter-info-content">
-            <p>Filtré par genre: {series.length} série(s) trouvée(s)</p>
-            <button 
-              className="clear-all-btn"
-              onClick={() => {
-                setSelectedGenre(null);
-                setCurrentFilter("popular");
-              }}
-            >
-              ✕ Afficher toutes les séries
-            </button>
-          </div>
+        <div className="filter-info" style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <p style={{ margin: 0, color: 'var(--text-muted)' }}>Filtré par genre: {series.length} série(s) trouvée(s)</p>
+          <button 
+            className="menu-btn"
+            style={{ fontSize: '13px', padding: '6px 12px', border: '1px solid var(--border-glass)' }}
+            onClick={() => {
+              setSelectedGenre(null);
+              setCurrentFilter("popular");
+            }}
+          >
+            ✕ Afficher toutes les séries
+          </button>
         </div>
       )}
 
       {/* État de chargement */}
       {loading ? (
-        <div className="loading-container">
+        <div className="loading-container" style={{ textAlign: 'center', padding: '80px 0', color: 'var(--text-muted)' }}>
           <div className="loading-spinner"></div>
           <p>Chargement des séries...</p>
         </div>
       ) : series.length === 0 ? (
-        <div className="no-results">
+        <div className="no-results" style={{ textAlign: 'center', padding: '80px 0', color: 'var(--text-muted)' }}>
           <h3>Aucune série trouvée</h3>
           <p>Essayez de sélectionner un autre genre ou catégorie.</p>
-          {selectedGenre && (
-            <button 
-              className="reset-btn"
-              onClick={() => {
-                setSelectedGenre(null);
-                setCurrentFilter("popular");
-              }}
-            >
-              Réinitialiser les filtres
-            </button>
-          )}
         </div>
       ) : (
-        <>
-          {/* Compteur de résultats */}
-          {!selectedGenre && (
-            <div className="results-header">
-              <h2>
-                {currentFilter === "popular" && "Séries populaires"}
-                {currentFilter === "top_rated" && "Séries les mieux notées"}
-                {currentFilter === "on_the_air" && "Séries en cours de diffusion"}
-                {currentFilter === "airing_today" && "Séries diffusées aujourd'hui"}
-              </h2>
-              <span className="total-count">{series.length} série(s)</span>
-            </div>
-          )}
-
-          {/* Grille de séries */}
-          <div className="movies-grid">
-            {series.map((serie) => (
-              <div
-                key={serie.id}
-                className="movie-card"
-                onClick={() => navigate(`/serie/${serie.id}`)}
-                role="button"
-                tabIndex={0}
-                onKeyPress={(e) => e.key === 'Enter' && navigate(`/serie/${serie.id}`)}
-              >
-                <div className="card-image">
-                  <img
-                    src={
-                      serie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${serie.poster_path}`
-                        : "https://via.placeholder.com/220x330?text=No+Image"
-                    }
-                    alt={serie.name}
-                    loading="lazy"
-                    className="movie-img"
-                  />
-                  <div className="card-overlay">
-                    <span className="rating">★ {serie.vote_average?.toFixed(1)}</span>
-                    {serie.first_air_date && (
-                      <span className="year">{serie.first_air_date.split("-")[0]}</span>
-                    )}
-                  </div>
-                </div>
-                <div className="card-content">
-                  <h3 className="movie-title">{serie.name}</h3>
-                  {serie.first_air_date && (
-                    <p className="movie-date">Depuis {serie.first_air_date.split("-")[0]}</p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
+        <div className="movies-grid">
+          {series.map((serie) => (
+            <MediaCard
+              key={serie.id}
+              id={serie.id}
+              title={serie.name}
+              posterPath={serie.poster_path}
+              voteAverage={serie.vote_average}
+              releaseDate={serie.first_air_date}
+              type="tv"
+            />
+          ))}
+        </div>
       )}
     </div>
   );

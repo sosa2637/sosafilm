@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: sosa-cine-app
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_TMDB_API_KEY
+        sync: false
+      - key: VITE_NEWS_API_KEY
+        sync: false

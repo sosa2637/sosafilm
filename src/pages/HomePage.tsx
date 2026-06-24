@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MediaCard from "../components/MediaCard";
 
 import {
   getTop10,
@@ -22,7 +23,6 @@ export default function HomePage() {
   const [popularMovies, setPopularMovies] = useState<any[]>([]);
   const [trendingSeries, setTrendingSeries] = useState<any[]>([]);
 
-  // 📌 Charger toutes les données TMDB (y compris le HERO)
   useEffect(() => {
     async function loadAll() {
       const heroMovie = await getHeroMovie();
@@ -42,23 +42,22 @@ export default function HomePage() {
   const filmsToShow =
     Array.isArray(topFilms) && topFilms.length > 0
       ? topFilms
-      : [
-          { id: 1, title: "John Wick", poster_path: "/some_path.jpg" },
-          { id: 2, title: "Empathie", poster_path: "/some_path.jpg" }
-        ];
+      : [];
 
   return (
     <div className="home-container">
-      
       {/* 🟥 HERO BANNER */}
       {hero && (
-        <div
-          className="hero-banner"
-          style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original${hero.backdrop_path})`,
-          }}
-        >
-          <div className="hero-overlay">
+        <div className="hero-wrapper">
+          <div
+            className="hero-background"
+            style={{
+              backgroundImage: `url(https://image.tmdb.org/t/p/original${hero.backdrop_path})`,
+            }}
+          />
+          <div className="hero-gradient" />
+          
+          <div className="hero-content">
             <h1 className="hero-title">{hero.title}</h1>
             <p className="hero-overview">{hero.overview}</p>
 
@@ -66,117 +65,98 @@ export default function HomePage() {
               className="hero-btn"
               onClick={() => navigate(`/film/${hero.id}`)}
             >
-              Voir le film →
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              Regarder le film
             </button>
           </div>
         </div>
       )}
 
-      {/* 🟦 TOP 10 */}
-      <h2>TOP 10 DES FILMS CETTE SEMAINE</h2>
-
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={5}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 2500 }}
-        breakpoints={{
-          320: { slidesPerView: 1 },
-          480: { slidesPerView: 2 },
-          768: { slidesPerView: 3 },
-          1200: { slidesPerView: 5 },
-        }}
-        className="swiper-top10"
-      >
-        {filmsToShow.map((film, index) => (
-          <SwiperSlide key={film.id}>
-            <div
-              className="movie-card"
-              onClick={() => navigate(`/film/${film.id}`)}
-            >
-              <div className="rank-badge">{index + 1}</div>
-
-              <img
-                src={
-                  film.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
-                    : "https://via.placeholder.com/220x330"
-                }
-                alt={film.title}
-              />
-
-              <p>{film.title}</p>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      {/* 🟩 SECTION 1 - À LA UNE */}
-      <h2 style={{ marginTop: "40px" }}>À LA UNE</h2>
-      <div className="movies-grid">
-        {popularMovies.slice(0, 12).map((film) => (
-          <div
-            key={film.id}
-            className="movie-card"
-            onClick={() => navigate(`/film/${film.id}`)}
+      <div className="content-wrapper">
+        {/* 🟦 TOP 10 */}
+        <h2 className="section-title">Top 10 des films cette semaine</h2>
+        
+        {filmsToShow.length > 0 && (
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={24}
+            slidesPerView={5}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3500, disableOnInteraction: false }}
+            breakpoints={{
+              320: { slidesPerView: 1 },
+              480: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 },
+              1280: { slidesPerView: 5 },
+            }}
+            className="swiper-top10"
           >
-            <img
-              src={
-                film.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
-                  : "https://via.placeholder.com/220x330"
-              }
-              alt={film.title}
-            />
-            <p>{film.title}</p>
-          </div>
-        ))}
-      </div>
+            {filmsToShow.map((film) => (
+              <SwiperSlide key={`top10-${film.id}`}>
+                <MediaCard
+                  id={film.id}
+                  title={film.title}
+                  posterPath={film.poster_path}
+                  voteAverage={film.vote_average}
+                  releaseDate={film.release_date}
+                  type="movie"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
 
-      {/* 🟧 SECTION 2 - Films populaires */}
-      <h2 style={{ marginTop: "40px" }}>FILMS POPULAIRES</h2>
-      <div className="movies-grid">
-        {popularMovies.slice(12, 24).map((film) => (
-          <div
-            key={film.id}
-            className="movie-card"
-            onClick={() => navigate(`/film/${film.id}`)}
-          >
-            <img
-              src={
-                film.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
-                  : "https://via.placeholder.com/220x330"
-              }
-              alt={film.title}
+        {/* 🟩 SECTION 1 - À LA UNE */}
+        <h2 className="section-title">À la une</h2>
+        <div className="movies-grid">
+          {popularMovies.slice(0, 10).map((film) => (
+            <MediaCard
+              key={`popular1-${film.id}`}
+              id={film.id}
+              title={film.title}
+              posterPath={film.poster_path}
+              voteAverage={film.vote_average}
+              releaseDate={film.release_date}
+              type="movie"
             />
-            <p>{film.title}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* 🟪 SECTION 3 - Séries tendances */}
-      <h2 style={{ marginTop: "40px" }}>SÉRIES TENDANCES</h2>
-      <div className="movies-grid">
-        {trendingSeries.slice(0, 12).map((serie) => (
-          <div
-            key={serie.id}
-            className="movie-card"
-            onClick={() => navigate(`/film/${serie.id}`)}
-          >
-            <img
-              src={
-                serie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${serie.poster_path}`
-                  : "https://via.placeholder.com/220x330"
-              }
-              alt={serie.name}
+        {/* 🟧 SECTION 2 - Films populaires */}
+        <h2 className="section-title">Films populaires</h2>
+        <div className="movies-grid">
+          {popularMovies.slice(10, 20).map((film) => (
+            <MediaCard
+              key={`popular2-${film.id}`}
+              id={film.id}
+              title={film.title}
+              posterPath={film.poster_path}
+              voteAverage={film.vote_average}
+              releaseDate={film.release_date}
+              type="movie"
             />
-            <p>{serie.name}</p>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* 🟪 SECTION 3 - Séries tendances */}
+        <h2 className="section-title">Séries tendances</h2>
+        <div className="movies-grid">
+          {trendingSeries.slice(0, 10).map((serie) => (
+            <MediaCard
+              key={`trending-${serie.id}`}
+              id={serie.id}
+              title={serie.name}
+              posterPath={serie.poster_path}
+              voteAverage={serie.vote_average}
+              releaseDate={serie.first_air_date}
+              type="tv"
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

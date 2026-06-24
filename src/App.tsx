@@ -17,7 +17,10 @@ import ActualitesPage from "./pages/ActualitesPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import SearchPage from "./pages/SearchPage";
+import FaqPage from "./pages/FaqPage";
+import TermsPage from "./pages/TermsPage";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -57,9 +60,13 @@ export default function App() {
         {/* FIXED PAGES */}
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<TermsPage />} />
 
-        {/* LOGIN */}
+        {/* LOGIN & REGISTER */}
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
         {/* SEARCH */}
         <Route path="/search" element={<SearchPage />} />
