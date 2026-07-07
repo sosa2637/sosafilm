@@ -328,7 +328,7 @@ body {
 @media (max-width: 900px) {
   .header-bar-center, .header-bar-right { display:none; }
   .burger { display:block; }
-  .mobile-menu { display:flex; position:fixed; right:0; top:80px; width:260px; height:calc(100%-80px); flex-direction:column; gap:14px; padding:18px; background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02)); backdrop-filter: blur(8px); }
+  .mobile-menu { display:flex; position:fixed; right:0; top:80px; width:260px; height:calc(100% - 80px); flex-direction:column; gap:14px; padding:18px; background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02)); backdrop-filter: blur(8px); }
   .footer-top, .footer-bottom { flex-direction:column; padding:20px; text-align:center; gap:12px; }
   .search-bar { width:120px; }
 }
