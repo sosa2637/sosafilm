@@ -85,6 +85,31 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// Actualités (NewsAPI Proxy)
+app.get('/api/news', async (req, res) => {
+  const { q, page } = req.query;
+  const NEWS_API_KEY = process.env.VITE_NEWS_API_KEY || process.env.NEWS_API_KEY;
+  
+  if (!NEWS_API_KEY) {
+    return res.status(500).json({ error: 'Clé API News manquante sur le serveur.' });
+  }
+
+  try {
+    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(q || 'cinema')}&language=fr&pageSize=9&page=${page || 1}&apiKey=${NEWS_API_KEY}`;
+    // Support Node.js 18+ native fetch
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (!response.ok) {
+      return res.status(response.status).json(data);
+    }
+    res.json(data);
+  } catch (error) {
+    console.error('News API proxy error:', error);
+    res.status(500).json({ error: 'Erreur lors du contact avec NewsAPI.' });
+  }
+});
+
 // --- PRODUCTION SETUP ---
 import path from 'path';
 import { fileURLToPath } from 'url';
